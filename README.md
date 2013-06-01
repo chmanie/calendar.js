@@ -27,15 +27,19 @@ Example:
       }
     });
     
-Results in a 5x7 grid array for the given month (June 2013) which contains your desired data (today's date is the first of june in our example):
+Results in a 5x7 grid array for the given month (June 2013) which contains your desired data (today's date is the 1st of june in our example):
     
+                         May 27, May 28, May 29, May 30, May 31, Jun 01, Jun 02
+                            |       |       |       |       |       |       |
     myMonth[0]      === [Object, Object, Object, Object, Object, Object, Object]
                          /   \                                    /   \
     e.g.:   events: [event]  cssClass: 'day'         events: [null]  cssClass: 'today'
     
     myMonth[1]      === [...]
     myMonth[...]    === [...]
-    myMonth[4]      === [...]
+    myMonth[4]      === [Object, Object, Object, Object, Object, Object, Object]
+                            |       |       |       |       |       |       |
+                         Jun 24, Jun 25, Jun 26, Jun 27, Jun 28, Jun 29, Jun 30
     
 The method doesn't need any arguments:
   
