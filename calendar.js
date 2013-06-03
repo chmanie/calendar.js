@@ -61,9 +61,9 @@ Calendar.prototype.createCalendar = function (dateObj, options, action) {
     cal[week] = [];
     for (var day = 0; day < 7; day++) {
       // determine exposed parameters
-      var today = (this.now.getFullYear() === currentDate.getFullYear() && 
-              this.now.getMonth() === currentDate.getMonth() && 
-              this.now.getDate() === currentDate.getDate());
+      var today = (this.now.getFullYear() === currentDate.getFullYear() &&
+                  this.now.getMonth() === currentDate.getMonth() &&
+                  this.now.getDate() === currentDate.getDate());
 
       // implementation of already past days
       var pastDay = (currentDate.valueOf() < this.now.valueOf() && !today);
