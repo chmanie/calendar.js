@@ -1,0 +1,24 @@
+{
+  "name": "calendar.js",
+  "version": "0.0.1",
+  "description": "calendar library for node and browsers",
+  "main": "calendar.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "~1.6.0"
+    },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chmanie/calendar.js.git"
+  },
+  "author": "Christian Maniewski",
+  "license": "MIT",
+  "gitHead": "3df75e273525703dd77df8dd267455306825df82",
+  "readmeFilename": "README.md"
+}
