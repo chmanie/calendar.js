@@ -1,7 +1,6 @@
 Calendar = require('../calendar');
 expect = require('chai').expect;
 
-
 cal = new Calendar();
 calCustom = new Calendar(new Date(2013, 5, 6));
 
@@ -37,6 +36,8 @@ describe('Month calendar', function() {
   });
 
   it('should start the month with the defined start of week', function() {
+    defaultWeekStart = cal.weeksCalendar(new Date());
+    expect(defaultWeekStart[0][0].date.getDay()).to.equal(1);
     weekStartSunday = cal.monthCalendar(new Date(2013,5), {weekStart:0}); //sunday
     expect(weekStartSunday).to.have.length(6); // it got longer!
     expect(weekStartSunday[0][0].date.getDate()).to.equal(26);
@@ -69,10 +70,39 @@ describe('Month calendar', function() {
   });
 
 describe('Week calendar', function() {
-  
+
+  it('has four weeks by default', function() {
+    fourWeeksCal = cal.weeksCalendar(new Date());
+    expect(fourWeeksCal).to.have.length(4);
+  });
+
   it('creates the correct number of weeks', function() {
     standardWeekCal = cal.weeksCalendar(new Date(2013, 5, 6), {weeks: 3}); // 2013/6/6
     expect(standardWeekCal).to.have.length(3);
+  });
+
+  it('starts with the correct day', function() {
+    weekCalDay = cal.weeksCalendar(new Date(2013,5,6), {weeks: 3});
+    expect(weekCalDay[0][0].date.getDay()).to.equal(1); // Monday
+    expect(weekCalDay[0][0].date.getDate()).to.equal(3); // 2013/06/03
+  });
+
+  it('doesnt care for month endings', function() {
+    weekNextMonth = cal.weeksCalendar(new Date(2013,5,28), {weeks: 4});
+    expect(weekNextMonth[0][0].date.getDate()).to.equal(24);
+    expect(weekNextMonth[2][0].date.getMonth()).to.equal(6);
+    expect(weekNextMonth[2][0].date.getDate()).to.equal(8);
+  });
+
+  it('handles weekStart correctly', function() {
+    weeksDefaultWeekStart = cal.weeksCalendar(new Date());
+    expect(weeksDefaultWeekStart[0][0].date.getDay()).to.equal(1); // Default: monday
+    weeksWeekStartSunday = cal.weeksCalendar(new Date(2013,5,7), {weekStart: 0});
+    expect(weeksWeekStartSunday[0][0].date.getDay()).to.equal(0);
+    expect(weeksWeekStartSunday[0][0].date.getDate()).to.equal(2);
+    weeksWeekStartWednesday = cal.weeksCalendar(new Date(2013,5,7), {weekStart: 3});
+    expect(weeksWeekStartWednesday[0][0].date.getDay()).to.equal(3);
+    expect(weeksWeekStartWednesday[0][0].date.getDate()).to.equal(5);
   });
 });
 
