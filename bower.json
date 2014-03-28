@@ -1,0 +1,26 @@
+{
+  "name": "calendar.js",
+  "main": "calendar.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/chmanie/calendar.js",
+  "authors": [
+    "Christian Maniewski <christian@maniewski.de>"
+  ],
+  "description": "Library for calendar models (node and browser)",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "calendar",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
