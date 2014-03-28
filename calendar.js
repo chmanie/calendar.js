@@ -1,4 +1,4 @@
-(function (window) {
+(function () {
   function Calendar (date) {
     // a custom 'today' date can be injected
     this.now = date || new Date();
@@ -94,4 +94,4 @@
   } else {
     window.Calendar = Calendar;
   }
-})(window);
+})();
