@@ -73,18 +73,37 @@
 
         // TODO: thisWeek?
 
-        // if action is defined only results of the action function are pushed into the calendar array
-        if (action) {
-          cal[week].push(action(currentDate, thisMonth, today, pastDay));
-        } else {
-          cal[week].push({date: currentDate, thisMonth: thisMonth, today: today, pastDay: pastDay});
+        var contents = {
+          date: currentDate,
+          thisMonth: thisMonth,
+          today: today,
+          pastDay: pastDay
+        };
+
+        // if action is defined results of the action function are pushed into the calendar array
+        if ('function' === typeof action) {
+          contents.data = action(currentDate, thisMonth, today, pastDay) || [];
         }
+        
+        cal[week].push(contents);
+        
         // increment day
         currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()+1);
       }
     }
 
-    return cal;
+    function populate(fn) {
+      for (var i = cal.length - 1; i >= 0; i--) {
+        for (var j = cal[i].length - 1; j >= 0; j--) {
+          cal[i][j].data = fn(cal[i][j].date, cal[i][j].thisMonth, cal[i][j].today, cal[i][j].pastDay);
+        }
+      }
+    }
+
+    return {
+      calendar: cal,
+      populate: populate
+    };
 
   };
 
