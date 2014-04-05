@@ -6,24 +6,25 @@
 
   Calendar.prototype.monthCalendar = function(date, options, action) {
     if (options) {
-      options.method = 'monthCalendar';
+      options.view = 'month';
     } else {
-      options = { method: 'monthCalendar' };
+      options = { view: 'month' };
     }
     return this.createCalendar(date, options, action);
   };
 
   Calendar.prototype.weeksCalendar = function(date, options, action) {
     if (options) {
-      options.method = 'weeksCalendar';
+      options.view = 'weeks';
     } else {
-      options = { method: 'weeksCalendar' };
+      options = { view: 'weeks' };
     }
     return this.createCalendar(date, options, action);
   };
 
   Calendar.prototype.createCalendar = function (dateObj, options, action) {
     var date = dateObj || this.now;
+    options.view = options.view || 'month';
     var cYear = date.getFullYear();
     var cMonth = date.getMonth();
     var cDate = date.getDate();
@@ -31,7 +32,7 @@
     // TODO: switch
     var cWeeks, firstDayOfView, firstDayOffset;
     // --- monthCalendar ---
-    if (options.method === 'monthCalendar') {
+    if (options.view === 'month') {
       var firstDayOfMonth = new Date(cYear, cMonth, 1).getDay(); // weekday of first month
       var lastDateOfMonth = new Date(cYear, cMonth+1, 0).getDate(); // number of days in current month
       firstDayOffset = cWeekStart > firstDayOfMonth ? cWeekStart-7 : cWeekStart; // set offset for first day of view
@@ -47,7 +48,7 @@
         cWeeks = Math.ceil((lastDateOfMonth + additionalDays) / 7);
       }
     // --- weeksCalendar ---
-    } else if (options.method === 'weeksCalendar') {
+    } else if (options.view === 'weeks') {
       cWeeks = options.weeks || 4; // show 4 weeks by default
       firstDayOfView = new Date(cYear, cMonth, cDate);
       firstDayOffset = cWeekStart > firstDayOfView.getDay() ? cWeekStart-7 : cWeekStart;
@@ -75,14 +76,14 @@
 
         var contents = {
           date: currentDate,
-          thisMonth: thisMonth,
-          today: today,
-          pastDay: pastDay
+          isInCurrentMonth: thisMonth,
+          isToday: today,
+          isPastDate: pastDay
         };
 
         // if action is defined results of the action function are pushed into the calendar array
         if ('function' === typeof action) {
-          contents.data = action(currentDate, thisMonth, today, pastDay) || [];
+          contents.entries = action(currentDate, thisMonth, today, pastDay) || [];
         }
         
         cal[week].push(contents);
@@ -95,7 +96,7 @@
     function populate(fn) {
       for (var i = cal.length - 1; i >= 0; i--) {
         for (var j = cal[i].length - 1; j >= 0; j--) {
-          cal[i][j].data = fn(cal[i][j].date, cal[i][j].thisMonth, cal[i][j].today, cal[i][j].pastDay);
+          cal[i][j].entries = fn(cal[i][j].date, cal[i][j].isInCurrentMonth, cal[i][j].isToday, cal[i][j].isPastDate);
         }
       }
     }
